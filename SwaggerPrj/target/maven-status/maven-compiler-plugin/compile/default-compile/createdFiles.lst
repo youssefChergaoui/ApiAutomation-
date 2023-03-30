@@ -1,0 +1,3 @@
+com\example\swaggerprj\models\SwaggerImporter.class
+com\example\swaggerprj\utils\PropertyReader.class
+com\example\swaggerprj\models\AccessTokenGenerator.class
