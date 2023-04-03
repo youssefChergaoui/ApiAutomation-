@@ -1,10 +1,26 @@
-public static String extractValueFromSwagger(String swaggerContent, String valueName) {
-        String regex = "\""+valueName+"\":\\s*\"([^\"]*)\"";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(swaggerContent);
-        if (matcher.find()) {
-            return matcher.group(1);
-        } else {
-            return null;
+public static List<Revision> getRevisionsOfApi(String apiId, String accessToken){
+        List<Revision> revisions = new ArrayList<>();
+        String url = API_PUBLISHER_ENDPOINT + "/" + apiId + "/revisions";
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .addHeader(AUTHORIZATION, BEARER + SPACE_SEPARATOR + accessToken)
+                .build();
+        Response response = null;
+        try {
+            response = HttpUtils.getUnsafeOkHttpClientWithProxy().newCall(request).execute();
+            String responseBody = response.body().string();
+            JsonObject responseJson = JsonParser.parseString(responseBody).getAsJsonObject();
+            JsonArray revisionArray = responseJson.getAsJsonArray("list");
+            for (JsonElement element : revisionArray) {
+                JsonObject revisionObject = element.getAsJsonObject();
+                Revision revision = new Revision();
+                revision.setId(revisionObject.get("id").getAsString());
+                revision.setDescription(revisionObject.get("description").getAsString());
+                revisions.add(revision);
+            }
+        } catch (Exception e) {
+            System.out.println("Failed to get revisions for API " + apiId + ". Error message: " + e.getMessage());
         }
+        return revisions;
     }
