@@ -1,3 +1,30 @@
+Automatisation du cycle de vie des API au sein de la plateforme de gestion d’APIs UNIBANK
+
+Description :
+
+Afin d’améliorer les processus actuels de gestion d’APIs , il s’agit d’implémenter des extensions à la plateforme WSO UNIBANK, permettant d’effectuer :
+
+La publication automatique des APIs
+Des tests automatisés pour l’authentification et la consommation des APIs publiées
+Le suivi des évolutions des APIs au sein de la plateforme au travers des différents environnements de déploiement
+
+Missions :
+
+Etude et conception de la solution
+
+Intégration du déploiement via la pipeline CI/CD de la Digital Factory
+
+Documentation de la solution et rédaction du rapport de stage
+
+Technologies :
+
+WSO2 API Manager, WSO2 Identity Server
+
+Langages de programmation Java, Javascript
+
+Git, Ansible, Jenkins
+
+
 public static List<Revision> getRevisionsOfApi(String apiId, String accessToken){
         List<Revision> revisions = new ArrayList<>();
         String url = API_PUBLISHER_ENDPOINT + "/" + apiId + "/revisions";
